@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "154636689959",
+    "project_id": "telegram-copy-6e39e",
+    "storage_bucket": "telegram-copy-6e39e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:154636689959:android:bcad595a494be6b82fe402",
+        "android_client_info": {
+          "package_name": "com.example.telegram_copy"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8IlSe0sNaIFmXwbtYf_PBr6wtooQGgEg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
