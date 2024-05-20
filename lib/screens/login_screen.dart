@@ -1,5 +1,6 @@
 import "package:flutter/gestures.dart";
 import "package:flutter/material.dart";
+import "package:telegram_copy/auth/auth_service.dart";
 import "package:telegram_copy/screens/register_screen.dart";
 
 import "../components/register_text_field.dart";
@@ -20,6 +21,9 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  String emailValue = "";
+  String passwordValue = "";
 
   @override
   void dispose() {
@@ -59,6 +63,11 @@ class _LoginScreenState extends State<LoginScreen> {
                 RegisterTextField(
                   controller: emailController,
                   labelText: "Адрес электронной почты",
+                  onChanged: (value) {
+                    setState(() {
+                      emailValue = value;
+                    });
+                  },
                 ),
                 const SizedBox(
                   height: 10,
@@ -67,13 +76,28 @@ class _LoginScreenState extends State<LoginScreen> {
                   controller: passwordController,
                   obscureText: true,
                   labelText: "Пароль",
+                  onChanged: (value) {
+                    setState(() {
+                      passwordValue = value;
+                    });
+                  },
                 ),
                 const SizedBox(
                   height: 20,
                 ),
                 TextButton(
-                  onPressed: () {
-                    print("pressed");
+                  onPressed: () async {
+                    AuthService _service = AuthService();
+
+                    try {
+                      await _service.login(
+                          emailController.text, passwordController.text);
+                    } catch (e) {
+                      showDialog(
+                        context: context,
+                        builder: (context) => Text(e.toString()),
+                      );
+                    }
                   },
                   style: ButtonStyle(
                       shape: const MaterialStatePropertyAll(LinearBorder()),

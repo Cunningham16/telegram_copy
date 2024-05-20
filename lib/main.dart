@@ -1,8 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:telegram_copy/firebase_options.dart';
-import 'package:telegram_copy/screens/home_screen.dart';
-import 'package:telegram_copy/screens/login_screen.dart';
+import 'package:telegram_copy/auth/auth_gate_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,7 +24,7 @@ class MyApp extends StatelessWidget {
             seedColor: const Color.fromRGBO(81, 125, 162, 1)),
         useMaterial3: true,
       ),
-      home: const LoginScreen(),
+      home: const AuthGateScreen(),
     );
   }
 }

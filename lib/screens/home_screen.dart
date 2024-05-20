@@ -1,6 +1,6 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
+import 'package:telegram_copy/auth/auth_service.dart';
+import 'package:telegram_copy/chat/chat_service.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key, required this.title});
@@ -12,18 +12,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<HomeScreen> {
-  int _counter = 0;
-
   bool isDrawerOpened = false;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
+    ChatService chatService = ChatService();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromRGBO(81, 125, 162, 1),
@@ -34,28 +27,25 @@ class _MyHomePageState extends State<HomeScreen> {
           isDrawerOpened = value;
         });
       },
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
+      body: StreamBuilder(
+        stream: chatService.watchUsers(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          return ListView(
+            children: snapshot.data!.map((e) => Text(e.toString())).toList(),
+          );
+        },
       ),
-      drawer: const Drawer(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-        child: Text("hello world"),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+      drawer: Drawer(
+        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+        child: TextButton(
+            onPressed: () async {
+              AuthService authService = AuthService();
+              await authService.logout();
+            },
+            child: const Text("Разлогинься!!")),
       ),
     );
   }
