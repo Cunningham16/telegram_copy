@@ -2,7 +2,7 @@ import "package:flutter/gestures.dart";
 import "package:flutter/material.dart";
 import "package:telegram_copy/auth/auth_service.dart";
 import "package:telegram_copy/components/register_text_field.dart";
-import "package:telegram_copy/data/user_register_data.dart";
+import "package:telegram_copy/data/user_data/user_data.dart";
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -102,11 +102,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                     try {
                       await authService.register(
-                          UserRegisterData(
-                              emailController.text,
-                              nameController.text,
-                              surnameController.text,
-                              "@${nicknameController.text}"),
+                          UserData(
+                              uid: "1",
+                              email: emailController.text,
+                              name: nameController.text,
+                              surname: surnameController.text,
+                              nickname: "@${nicknameController.text}"),
                           passwordController.text);
                       if (context.mounted) {
                         Navigator.of(context).pop();
@@ -125,7 +126,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       backgroundColor:
                           const MaterialStatePropertyAll(Color(0xFF50A8EB)),
                       minimumSize:
-                          const MaterialStatePropertyAll(Size(360, 48)),
+                          const MaterialStatePropertyAll(Size(300, 48)),
                       maximumSize: MaterialStatePropertyAll(
                           Size(MediaQuery.of(context).size.width * 0.9, 48))),
                   child: Text("Зарегистрироваться",

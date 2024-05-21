@@ -104,7 +104,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       backgroundColor:
                           const MaterialStatePropertyAll(Color(0xFF50A8EB)),
                       minimumSize:
-                          const MaterialStatePropertyAll(Size(360, 48)),
+                          const MaterialStatePropertyAll(Size(300, 48)),
                       maximumSize: MaterialStatePropertyAll(
                           Size(MediaQuery.of(context).size.width * 0.9, 48))),
                   child: Text("Войти",

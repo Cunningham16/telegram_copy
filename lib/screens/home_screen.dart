@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:telegram_copy/auth/auth_service.dart';
 import 'package:telegram_copy/chat/chat_service.dart';
+import 'package:telegram_copy/components/chat_tile.dart';
+import 'package:telegram_copy/data/user_data/user_data.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key, required this.title});
@@ -34,7 +36,9 @@ class _MyHomePageState extends State<HomeScreen> {
             return const Center(child: CircularProgressIndicator());
           }
           return ListView(
-            children: snapshot.data!.map((e) => Text(e.toString())).toList(),
+            children: snapshot.data!
+                .map((e) => ChatTile(userData: UserData.fromJson(e)))
+                .toList(),
           );
         },
       ),

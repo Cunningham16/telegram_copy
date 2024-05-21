@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:telegram_copy/data/user_register_data.dart';
+import 'package:telegram_copy/data/user_data/user_data.dart';
 
 class AuthService {
   final FirebaseAuth _instanceAuth = FirebaseAuth.instance;
@@ -17,13 +17,15 @@ class AuthService {
   }
 
   Future<UserCredential> register(
-      UserRegisterData userRegisterData, String password) async {
+      UserData userRegisterData, String password) async {
     try {
       UserCredential userCredential =
           await _instanceAuth.createUserWithEmailAndPassword(
               email: userRegisterData.email, password: password);
+      UserData newUser =
+          userRegisterData.copyWith(uid: userCredential.user!.uid);
       _instanceStore.runTransaction((transaction) async {
-        _instanceStore.collection("/users").add(userRegisterData.toJson());
+        _instanceStore.collection("/users").add(newUser.toJson());
       });
       return userCredential;
     } on FirebaseAuthException catch (e) {
